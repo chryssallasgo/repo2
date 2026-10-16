@@ -72,7 +72,7 @@ function App() {
   return (
     <main className="app">
       <header className="page-header">
-        <p className="eyebrow">React practice project</p>
+        <p className="eyebrow">React Exercise</p>
         <h1>Name Shuffler</h1>
         <p>
           Enter ten names, then shuffle the first names and last names
