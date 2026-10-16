@@ -1,3 +1,8 @@
+/*
+ * ACH 10/16/26
+ * The dist and node_modules folder are not included in the zip file. Run "npm install", then "npm run dev" and open
+ * the local URL printed by Vite.
+ */
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { getAsciiTotal, shuffleNames } from './nameShuffler'
@@ -6,6 +11,7 @@ import './App.css'
 
 const nameCount = 10
 
+// ACH 10/16/26 Keep the form at exactly ten entries for the assignment.
 function createEmptyNames(): Name[] {
   return Array.from({ length: nameCount }, () => ({
     firstName: '',
@@ -14,6 +20,8 @@ function createEmptyNames(): Name[] {
 }
 
 function App() {
+  // ACH 10/16/26 Keep entered values separate from results so users can
+  // review the submitted shuffle while retaining the original form values.
   const [names, setNames] = useState<Name[]>(createEmptyNames)
   const [submittedNames, setSubmittedNames] = useState<Name[] | null>(null)
 
@@ -32,6 +40,8 @@ function App() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
+    // ACH 10/16/26 Shuffle each name part independently so original pairs
+    // are not preserved in the submitted results.
     const firstNames = shuffleNames(
       names.map(({ firstName }) => ({ firstName, lastName: '' })),
     )
@@ -48,12 +58,15 @@ function App() {
   }
 
   const alphabeticallyOrderedNames =
+    // ACH 10/16/26 localeCompare treats equality as zero and supports the
+    // required first-name-before-or-equal-to-last-name condition.
     submittedNames?.filter(
       ({ firstName, lastName }) =>
         firstName.localeCompare(lastName) <= 0,
     ) ?? []
 
   const shuffledLastNames =
+    // ACH 10/16/26 Reuse the displayed last-name order for ASCII totals.
     submittedNames?.map(({ lastName }) => lastName) ?? []
 
   return (
